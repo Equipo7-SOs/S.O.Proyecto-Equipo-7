@@ -20,7 +20,7 @@ El proyecto consiste en desarrollar un simulador que permita analizar el comport
 ---
 
 ## ⚙️ Herramientas y Lenguaje a Utilizar
-- **Lenguaje:** C  
+- **Lenguaje:** Python
 - **Entorno de desarrollo:** GCC / Visual Studio Code / Linux Terminal  
 - **Control de versiones:** Git y GitHub  
 
@@ -39,7 +39,7 @@ El simulador permitirá observar, comparar y analizar el rendimiento de cada alg
 ## 🎯 Objetivos
 
 ### Objetivo General
-Diseñar e implementar un simulador en C que reproduzca el comportamiento de diversos algoritmos de administración de recursos en un sistema operativo, con el fin de comparar su desempeño en diferentes situaciones.
+Diseñar e implementar un simulador en Python que reproduzca el comportamiento de diversos algoritmos de administración de recursos en un sistema operativo, con el fin de comparar su desempeño en diferentes situaciones.
 
 ### Objetivos Específicos
 - Comprender el funcionamiento interno de los algoritmos de administración de recursos.  
