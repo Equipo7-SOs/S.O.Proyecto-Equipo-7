@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 """
     Interface for all other scheduling algorithms
 """
-def Scheduler(ABC):
+class Scheduler(ABC):
 
     @abstractmethod
     def __init__(self):

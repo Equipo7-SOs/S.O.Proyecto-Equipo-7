@@ -30,8 +30,7 @@ class Process:
     current_time: tick in which the process has finished processing
     """
     def set_completion_time(self, current_time):
-        if not self.is_finished():
-            self.completion_time = current_time
+        self.completion_time = current_time
 
     """
     Time between the process' arrival to the ready queue to when it is first executed.

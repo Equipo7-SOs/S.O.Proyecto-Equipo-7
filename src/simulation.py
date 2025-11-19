@@ -30,6 +30,7 @@ class Simulation:
         current_process = self.scheduler.choose_process() # returns either None or something
         if current_process:
             current_process.set_remaining_time(1, self.current_tick) # processing current
+            print(f"Process with ID {current_process.pid} processed during tick {self.current_tick}")
             # TODO update metrics
             return True
         return False
