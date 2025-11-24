@@ -3,6 +3,8 @@ from .scheduler import Scheduler
 class SRJF(Scheduler):
     def __init__(self, processes=None):
         self.ready_queue = []
+        self.current_process = None
+        
 
     def add_to_queue(self, new_process):
         self.ready_queue.append(new_process)
