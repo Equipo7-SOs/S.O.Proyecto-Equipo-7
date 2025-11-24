@@ -54,12 +54,17 @@ class Process:
     current_time: tick in which the process is being updated
     """
     def set_remaining_time(self, processed_time, current_time):
-        # if the process' remaining time before being updated is equal to its burst time 
-        # then this is the first time it is being processed
+        # 1. Response Time: Se marca cuando el proceso EMPIEZA a ser atendido
         if self.remaining_time == self.burst_time:
             self.set_response_time(current_time)
+        
         self.remaining_time -= processed_time
-        if self.remaining_time == 0:
-            self.set_completion_time(current_time)
+        
+        # 2. Completion Time: Se marca cuando el proceso TERMINA.
+        # Si estamos en el tick 0 y procesamos 1 unidad, terminamos en el tiempo 1.
+        if self.remaining_time <= 0: # Usamos <= por seguridad
+            self.remaining_time = 0
+            self.set_completion_time(current_time + processed_time)
+            
             self.set_turnaround_time()
             self.set_waiting_time()

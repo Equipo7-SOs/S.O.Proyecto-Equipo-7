@@ -1,47 +1,29 @@
 from .scheduler import Scheduler
 from collections import deque
 
-"""
-    Implements First-Come, First-Served process scheduling 
-    algorithm using a double ended queue.
-"""
 class FCFS(Scheduler):
-    
-    """
-        Initializes the queue given a list of processes.
-        It sorts them in ascending order by arrival time.
-    """
     def __init__(self, processes=None):
+        # Inicializamos vacío. Ignoramos 'processes' si llega.
         self.ready_queue = deque()
         self.current_process = None
-        if processes:
-            self.ready_queue = deque(sorted(processes, key=lambda p: p.arrival_time))
 
-    """
-    We'll assume the arrival time is greater than the previous ones.
-    This is only for non-user generated simulations
-    """
     def add_to_queue(self, new_process):
+        # Simplemente al final de la cola
         self.ready_queue.append(new_process)
 
-    """
-    Chooses process to run during this tick
-    """
     def choose_process(self):
-        try:
-            # We'll see if the current head has already been fully processed
-            # or if there is no head hasn't been picked
-            if self.current_process is None:
-                self.current_process = self.ready_queue[0]
-            elif self.current_process.remaining_time == 0:
-                self.ready_queue.popleft() 
-                self.current_process = self.ready_queue[0]
-            # if the previous condition is not true then the head is still valid
-        except IndexError: # the queue may run out of processes, if so we'll return None
-            print("No more processes in queue")
+        # 1. Si el proceso actual terminó, lo sacamos
+        if self.current_process and self.current_process.is_finished():
             self.current_process = None
-        finally:
-            return self.current_process
-    
+
+        # 2. Si no hay proceso corriendo, tomamos el siguiente de la fila
+        if self.current_process is None:
+            if self.ready_queue:
+                self.current_process = self.ready_queue.popleft()
+            else:
+                return None
+
+        return self.current_process
+
     def get_name(self):
         return "First Come, First Served"
