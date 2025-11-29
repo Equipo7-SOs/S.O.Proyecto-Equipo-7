@@ -46,7 +46,6 @@ Diseñar e implementar un simulador en Python que reproduzca el comportamiento d
 - Simular y analizar **cuatro algoritmos**, por ejemplo:  
   - **Memoria:** FIFO, LRU, OPTIMAL
   - **Planificación de CPU:** FIFO, RR, SJF
-- Evaluar los algoritmos mediante métricas **cuantitativas** y **cualitativas**.  
 - Documentar los resultados y conclusiones del análisis comparativo.
 
 ---
@@ -58,6 +57,36 @@ Diseñar e implementar un simulador en Python que reproduzca el comportamiento d
   [https://www.cs.cornell.edu/~tomf/notes/cps104/virtual.html](https://www.cs.cornell.edu/~tomf/notes/cps104/virtual.html)
 
 ---
+
+## 📘 Guía de Instalación y Uso
+
+Este repositorio contiene implementaciones de 4 algoritmos de planificación de CPU:
+First Come, First Served (FCFS), Shortest Job First (SJF), Shortest Remaining Job First (SRJF) y Round Robin (RR).
+
+### 📦 Requisitos
+
+- Python 3.8 o superior
+- No requiere librerías externas
+- Sistema operativo: Windows, Linux o macOS
+
+### 🛠️ Instalación
+
+Clona este repositorio:
+
+```bash
+git clone https://github.com/DaikiBenedek/S.O.Proyecto-Equipo-7.git
+```
+
+Entra al directorio y a la carpeta src:
+```bash
+cd nombre_repo/src
+```
+### ▶️ Ejecución
+
+Para ejecutar el programa:
+```bash
+python main.py
+```
 
 ## 🌐 Repositorio del Proyecto
 
