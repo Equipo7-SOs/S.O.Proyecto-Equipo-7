@@ -91,4 +91,4 @@ python main.py
 ## 🌐 Repositorio del Proyecto
 
 📎 **GitHub Repository:**  
-[Enlace del repositorio](https://github.com/DaikiBenedek/S.O.Proyecto-Equipo-7)
+[Enlace del repositorio](https://github.com/Equipo7-SOs/S.O.Proyecto-Equipo-7)
