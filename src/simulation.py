@@ -95,4 +95,5 @@ class Simulation:
                 simulation_active = False
 
         # Imprime métricas finales y Gantt
+        self.reporter.print_compact_gantt()
         print(self.reporter)

@@ -42,11 +42,11 @@ def generate_random_processes(n_procs=6, max_arrival=10, burst_min=1, burst_max=
 
 
 def choose_user_processes():
-    print("¿Deseas generar procesos aleatorios? (s/n) [n por defecto]")
+    print("¿Deseas generar procesos aleatorios? (s/n) [s por defecto]")
     # Lee la decisión del usuario: s/n
     choice = input().strip().lower()
     # Cuando el usuario quiere procesos aleatorios
-    if choice == 's':
+    if choice == 'n':
         try:
             # Se solicitan parámetros de generación
             n = int(input("Número de procesos (ej. 6): ").strip())

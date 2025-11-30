@@ -50,58 +50,7 @@ class Metrics:
         else:
             self.gantt_log.append({'pid': pid, 'duration': 1})
 
-    # --- NUEVO MÉTODO 2: Imprimir el gráfico ---
-    def print_gantt_chart(self):
-        print(f"\n\t--- Gantt Chart: {self.name} ---")
-        
-        top_border = "  "
-        middle_bar = "  "
-        time_line  = "0 " 
-        
-        current_time = 0
-        
-        for entry in self.gantt_log:
-            pid = entry['pid']
-            duration = entry['duration']
-            
-            # Etiqueta: "P1" o "Idle"
-            if pid is None:
-                label = "Idle"
-            else:
-                label = f"P{pid}"
-            
-            block_width = max(len(label) + 2, duration + 2) 
-            
-            top_border += "_" * block_width
-            
-            padding = block_width - len(label)
-            left_pad = padding // 2
-            right_pad = padding - left_pad
-            middle_bar += f"|{' ' * left_pad}{label}{' ' * right_pad}"
-            
-            current_time += duration
-            
-            time_str = str(current_time)
-
-            # Espacios para llegar al final del bloque menos lo que ocupa el número
-            space_needed = block_width - len(str(time_str)) + 1
-            if len(time_line.split()[-1]) > 1: # Ajuste fino si el número anterior era largo
-                 space_needed -= 1
-            
-            time_line += f"{' ' * (block_width - len(time_str))}{time_str} "
-
-        top_border += "_" # Cerrar borde
-        middle_bar += "|" # Cerrar barra
-        
-        print(top_border)
-        print(middle_bar)
-        print(top_border) 
-        print(time_line)
-        print("\n")
-
     def __str__(self):
-        # Agregamos la llamada al Gantt aquí para que salga automático
-        self.print_gantt_chart()
         
         return f"""
         --- Simulation Results: {self.name} ---
@@ -118,3 +67,42 @@ class Metrics:
         Avg Response Time:       {self.avg_response_time:.2f}
         ---------------------------------------
         """
+    def get_tick_log(self):
+        """
+        Expande gantt_log (con durations) a una lista donde cada índice es un tick 
+        y el valor es el PID ejecutado en ese tick.
+        """
+        ticks = []
+        for entry in self.gantt_log:
+            pid = entry["pid"]
+            duration = entry["duration"]
+            ticks.extend([pid] * duration)
+        return ticks
+    
+    # --- NUEVO MÉTODO 2: Imprimir el gráfico ---
+    def print_compact_gantt(self):
+        log = self.get_tick_log()   # << aquí convertimos
+        
+        if not log:
+            print("No Gantt data.")
+            return
+
+        print(f"\n\n--- GANTT CHART: {self.name} ---")
+
+        ranges = {}
+        start = 0
+        last = log[0]
+
+        for i in range(1, len(log)+1):
+            if i == len(log) or log[i] != last:
+                ranges.setdefault(last, []).append((start, i))
+                if i < len(log):
+                    start = i
+                    last = log[i]
+
+        # ---- IMPRIMIR RESULTADOS ----
+        for pid, segments in ranges.items():
+            label = f"P{pid}" if pid is not None else "Idle"
+            print(f"\n{label}:")
+            for (s, e) in segments:
+                print(f"  ticks {s} → {e}   (duración: {e - s})")
