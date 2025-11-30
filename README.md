@@ -39,16 +39,17 @@ El simulador permitirá observar, comparar y analizar el rendimiento de cada alg
 ## 🎯 Objetivos
 
 ### Objetivo General
-Diseñar e implementar un simulador en Python que reproduzca el comportamiento de diversos algoritmos de administración de recursos en un sistema operativo, con el fin de comparar su desempeño en diferentes situaciones.
+Diseñar e implementar un simulador en Python que reproduzca el comportamiento de diversos algoritmos de administración en un sistema operativo.
 
 ### Objetivos Específicos
-- Comprender el funcionamiento interno de los algoritmos de administración de recursos.  
-- Simular y analizar **cuatro algoritmos**, por ejemplo:  
-  - **Memoria:** FIFO, LRU, OPTIMAL
-  - **Planificación de CPU:** FIFO, RR, SJF
-- Evaluar los algoritmos mediante métricas **cuantitativas** y **cualitativas**.  
+- Comparar el desempeño de diferentes algoritmos de calendarización de procesos mediante métricas cuantitativas.
+- Comprender el funcionamiento interno de administración de recursos.
+- Simular y analizar **cuatro algoritmos**:  
+  - First Come, First Served
+  - Shortest Job First
+  - Shortest Remaining Time First
+  - Round robin
 - Documentar los resultados y conclusiones del análisis comparativo.
-
 ---
 
 ## 📚 Referencias y Documentación
@@ -59,7 +60,37 @@ Diseñar e implementar un simulador en Python que reproduzca el comportamiento d
 
 ---
 
+## 📘 Guía de Instalación y Uso
+
+Este repositorio contiene implementaciones de 4 algoritmos de planificación de CPU:
+First Come, First Served (FCFS), Shortest Job First (SJF), Shortest Remaining Job First (SRJF) y Round Robin (RR).
+
+### 📦 Requisitos
+
+- Python 3.8 o superior
+- No requiere librerías externas
+- Sistema operativo: Windows, Linux o macOS
+
+### 🛠️ Instalación
+
+Clona este repositorio:
+
+```bash
+git clone https://github.com/DaikiBenedek/S.O.Proyecto-Equipo-7.git
+```
+
+Entra al directorio y a la carpeta src:
+```bash
+cd nombre_repo/src
+```
+### ▶️ Ejecución
+
+Para ejecutar el programa:
+```bash
+python main.py
+```
+
 ## 🌐 Repositorio del Proyecto
 
 📎 **GitHub Repository:**  
-[Enlace del repositorio](https://github.com/DaikiBenedek/S.O.Proyecto-Equipo-7)
+[Enlace del repositorio](https://github.com/Equipo7-SOs/S.O.Proyecto-Equipo-7)
