@@ -95,7 +95,7 @@ def main():
             quantum = int(input("Introduce quantum (ticks): ").strip())
         except:
             # Maneja error y conserva el valor actual
-            print("Valor inválido, se mantiene quantum =", quantum)
+            print("Valor inválido, se mantiene quantum = ", quantum)
 
     schedulers_to_test = [
         # Clase del algoritmo FCFS
@@ -108,6 +108,18 @@ def main():
         lambda: RoundRobin(quantum=quantum)  
     ]
 
+    # 3) elegir tiempo de cambio de contexto en la simulacion
+    context_switching_overhead = 2 # por diremos que es 2 
+    print(f"\nTick Overhead por cambio de contexto (valor por defecto = {context_switching_overhead}). ¿Deseas cambiarlo? (s/n)")
+    # Si el usuario quiere modificar el quantum
+    if input().strip().lower() == 's':
+        try:
+            # Lee nuevo overhead
+            context_switching_overhead = int(input("Introduce overhead (ticks): ").strip())
+        except:
+            # Maneja error y conserva el valor actual
+            print("Valor inválido, se mantiene overhead = ", context_switching_overhead)
+ 
     verbose = False
     print(f"\n¿Quieres que la simulación te indique qué hace en cada tick? (s/n)")
     if input().strip().lower() == 's':
@@ -126,7 +138,7 @@ def main():
         # 2. Instanciar el scheduler
         scheduler = SchedulerClass()
         # 3. Instanciar simulación, crea una simulación con el scheduler dado y procesos
-        sim = Simulation(scheduler, procs, verbose)
+        sim = Simulation(scheduler, procs, context_switching_overhead, verbose)
         
         # 4. Correr la simulación
         sim.simulate()

@@ -1,7 +1,7 @@
 from metrics import Metrics
 
 class Simulation:
-    def __init__(self, scheduler, processes=[], verbose=True):
+    def __init__(self, scheduler, processes=[], switching_time=2, verbose=True):
         # Reloj global de la simulación, inicia en 0
         self.current_tick = 0 
         # Scheduler seleccionado (FCFS, SJF, SRJF o RR)
@@ -21,11 +21,18 @@ class Simulation:
             # Registrar cada proceso para métricas finales
             self.reporter.add_to_processes(p)
 
+        # tiempo que cambiara la simulacion en cambiar de contexto cuando se cambia el proceso que se ejecuta 
+        self.switching_time = switching_time
+
+        # ultimo proceso que se ejecutó
+        self.previous_process = None
+
      # Avanza el reloj global en +1
     def increment_tick(self):
         self.current_tick += 1
 
-    def tick(self):
+
+    def receive_processes(self):
         # 2. FASE DE LLEGADA: Mover procesos de "incoming" a "ready" (Scheduler)
         # Mientras haya procesos y el primero de la lista llegue AHORA:
         while self.incoming_processes and self.incoming_processes[0].arrival_time == self.current_tick:
@@ -36,15 +43,33 @@ class Simulation:
             
             print(f"[Tick {self.current_tick}] Process ID {process_arriving.pid} arrived.")
 
+    def tick(self):
+        self.receive_processes()
+
         # 3. FASE DE EJECUCIÓN: El Scheduler elige quién corre
         current_process = self.scheduler.choose_process()   # Puede devolver un proceso o None (CPU Idle) 
 
         if current_process:
+            # Verificamos si se necesita simular un cambio de contexto, esto pasa cuando se cambia el proceso a ejecutar
+            if self.previous_process is None or current_process.pid != self.previous_process.pid:
+                # Vamos a simular una cantidad de ciclos vacios 
+                for _ in range(self.switching_time):
+                    if self.verbose:
+                        print(f"[Tick {self.current_tick}] Context Switching")
+                    # Reportamos al contador de metricas
+                    self.reporter.increase_counter_time(used_cpu=False) 
+                    # Tambien registramos el tick vacio para Gantt
+                    self.reporter.log_execution(None)
+                    self.reporter.compute_metrics()
+                    # Tambien aumentamos el tick
+                    self.increment_tick()
+                    self.receive_processes() # si es necesario recibimos procesos en este tick vacio
+                    
             # Ejecutamos 1 tick del proceso (reduce remaining_time en 1)
             current_process.set_remaining_time(1, self.current_tick) 
             if self.verbose:
                 print(f"Process ID {current_process.pid} running at tick {self.current_tick}")
-            
+
             # NECESARIO PARA ROUND ROBIN
             #  Verifica si el scheduler tiene el método especial on_tick_executed()
             if hasattr(self.scheduler, "on_tick_executed"):
@@ -68,6 +93,9 @@ class Simulation:
         self.reporter.compute_metrics()
         # Avanzar el reloj después de terminar el tick
         self.increment_tick()
+
+        # Guardamos el proceso que ejecutamos en este tiempo como el ultimo proceso en ejecutarse para el siguiente tiempo
+        self.previous_process = current_process
 
         # Retornamos True si todavía hay trabajo pendiente (procesos llegando o en cola)
         return True 
